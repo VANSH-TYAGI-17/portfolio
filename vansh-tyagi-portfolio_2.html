@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vansh Tyagi — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FBF9F4;
+    --surface:#FFFFFF;
+    --ink:#191B23;
+    --ink-soft:#5E6472;
+    --line:#E4E0D6;
+
+    /* conditional-formatting-inspired accent trio */
+    --teal:#1F7A5C;
+    --teal-soft:#DFF1E7;
+    --amber:#DB8A2B;
+    --amber-soft:#FBEBD4;
+    --violet:#6455C9;
+    --violet-soft:#E9E5FA;
+    --coral:#D65D5D;
+    --coral-soft:#FBE4E1;
+
+    --accent:var(--teal);
+    --accent-soft:var(--teal-soft);
+
+    --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --display: "Space Grotesk", "Segoe UI", var(--sans);
+    --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+  }
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--accent); text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--accent); outline-offset:3px;}
+
+  .wrap{max-width:960px; margin:0 auto; padding:0 24px;}
+
+  /* ---------- Column ruler (grid motif) ---------- */
+  .col-ruler{
+    display:flex;
+    height:5px;
+    background:linear-gradient(90deg, var(--teal), var(--amber), var(--violet), var(--coral), var(--teal));
+    background-size:200% 100%;
+    animation:ruler-shift 14s linear infinite;
+  }
+  .col-ruler span{display:none;}
+  @keyframes ruler-shift{
+    from{background-position:0% 0;}
+    to{background-position:200% 0;}
+  }
+
+  /* ---------- Header / sheet-tab nav ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:var(--surface);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 24px;
+    max-width:960px; margin:0 auto;
+  }
+  .brand{
+    font-family:var(--display);
+    font-weight:600;
+    font-size:16px;
+    display:flex; align-items:center; gap:9px;
+    letter-spacing:-0.01em;
+  }
+  .brand .dot{
+    width:9px;height:9px;border-radius:2px; display:inline-block;
+    background:linear-gradient(135deg, var(--teal), var(--violet));
+  }
+  nav.tabs{
+    display:flex;
+    max-width:960px; margin:0 auto;
+    overflow-x:auto;
+    border-top:1px solid var(--line);
+  }
+  nav.tabs a{
+    font-family:var(--mono);
+    font-size:12.5px;
+    font-weight:500;
+    color:var(--ink-soft);
+    padding:10px 18px;
+    border-right:1px solid var(--line);
+    white-space:nowrap;
+    text-decoration:none;
+    position:relative;
+  }
+  nav.tabs a:nth-child(1){ --tab-c: var(--teal); }
+  nav.tabs a:nth-child(2){ --tab-c: var(--amber); }
+  nav.tabs a:nth-child(3){ --tab-c: var(--violet); }
+  nav.tabs a:nth-child(4){ --tab-c: var(--coral); }
+  nav.tabs a:hover{color:var(--ink); background:var(--bg); text-decoration:none;}
+  nav.tabs a.active{color:var(--tab-c, var(--accent)); background:var(--surface); font-weight:600;}
+  nav.tabs a.active::after{
+    content:"";
+    position:absolute; left:0; right:0; bottom:-1px; height:2px;
+    background:var(--tab-c, var(--accent));
+  }
+
+  /* ---------- Hero: formula bar ---------- */
+  .hero{padding:60px 0 44px;}
+  .fbar{
+    display:flex; align-items:center; gap:10px;
+    font-family:var(--mono); font-size:12.5px; color:var(--ink-soft);
+    background:var(--surface); border:1px solid var(--line); border-radius:6px;
+    padding:9px 14px; margin-bottom:38px;
+    box-shadow:0 1px 2px rgba(25,27,35,0.03);
+  }
+  .fbar .cellref{
+    color:var(--surface); font-weight:600; padding:2px 8px; border-radius:3px;
+    background:var(--teal);
+  }
+  .fbar .fx{color:var(--violet); font-weight:600;}
+  .fbar .formula{color:var(--ink-soft); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+
+  h1.name{
+    font-family:var(--display);
+    font-size:clamp(36px, 6vw, 58px);
+    font-weight:700;
+    letter-spacing:-0.02em;
+    margin:0 0 14px;
+    background:linear-gradient(100deg, var(--ink) 45%, var(--teal) 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .tagline{
+    font-size:18px;
+    color:var(--ink-soft);
+    max-width:560px;
+    margin:0 0 28px;
+  }
+  .hero-meta{
+    display:flex; flex-wrap:wrap; gap:10px 14px;
+    font-family:var(--mono); font-size:12.5px; color:var(--ink-soft);
+  }
+  .hero-meta span{
+    padding:5px 11px; border-radius:4px; font-weight:500;
+  }
+  .hero-meta span:nth-child(1){background:var(--teal-soft); color:var(--teal);}
+  .hero-meta span:nth-child(2){background:var(--amber-soft); color:var(--amber);}
+  .hero-meta span:nth-child(3){background:var(--violet-soft); color:var(--violet);}
+
+  /* ---------- Section shell ---------- */
+  section{padding:52px 0;}
+  section + section{border-top:1px solid var(--line);}
+  #about .eyebrow{ --sec-c: var(--teal); }
+  #skills .eyebrow{ --sec-c: var(--amber); }
+  #projects .eyebrow{ --sec-c: var(--violet); }
+  #contact .eyebrow{ --sec-c: var(--coral); }
+  .eyebrow{
+    font-family:var(--mono); font-size:12px; font-weight:600; color:var(--sec-c, var(--accent));
+    text-transform:uppercase; letter-spacing:0.08em; margin:0 0 8px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .eyebrow::before{content:""; width:16px; height:2px; background:var(--sec-c, var(--accent)); display:inline-block; border-radius:2px;}
+  h2{font-family:var(--display); font-size:28px; font-weight:700; margin:0 0 18px; letter-spacing:-0.01em;}
+  p.lede{color:var(--ink-soft); max-width:640px; margin:0 0 8px;}
+
+  /* ---------- About ---------- */
+  .about-grid{
+    display:grid; grid-template-columns:1.3fr 1fr; gap:32px;
+    margin-top:24px;
+  }
+  @media (max-width:700px){.about-grid{grid-template-columns:1fr;}}
+  .about-text p{margin:0 0 14px; color:var(--ink-soft);}
+  .facts{
+    background:var(--surface); border:1px solid var(--line); border-top:3px solid var(--teal);
+    border-radius:6px; overflow:hidden;
+    align-self:start;
+  }
+  .facts .row{
+    display:flex; justify-content:space-between; gap:12px;
+    padding:11px 14px; border-bottom:1px solid var(--line);
+    font-size:13.5px;
+  }
+  .facts .row:last-child{border-bottom:none;}
+  .facts .row .k{font-family:var(--mono); color:var(--ink-soft); font-size:12px;}
+  .facts .row .v{font-weight:600; text-align:right;}
+
+  /* ---------- Skills ---------- */
+  .skill-grid{
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr));
+    gap:14px; margin-top:22px;
+  }
+  .skill-card{
+    background:var(--surface); border:1px solid var(--line); border-left:3px solid var(--card-c, var(--teal));
+    border-radius:6px;
+    padding:16px 16px 15px;
+    transition:border-color .15s ease, transform .15s ease, box-shadow .15s ease;
+  }
+  .skill-card:nth-child(4n+1){ --card-c: var(--teal); }
+  .skill-card:nth-child(4n+2){ --card-c: var(--amber); }
+  .skill-card:nth-child(4n+3){ --card-c: var(--violet); }
+  .skill-card:nth-child(4n+4){ --card-c: var(--coral); }
+  .skill-card:hover{transform:translateY(-3px); box-shadow:0 8px 18px rgba(25,27,35,0.06);}
+  .skill-card .fx-label{
+    font-family:var(--mono); font-size:11px; font-weight:600; color:var(--card-c, var(--amber));
+    margin-bottom:9px; letter-spacing:0.02em;
+  }
+  .skill-card h3{font-family:var(--display); font-weight:600; font-size:16px; margin:0 0 6px;}
+  .skill-card p{font-size:13px; color:var(--ink-soft); margin:0;}
+
+  /* ---------- Projects ---------- */
+  .proj-list{display:flex; flex-direction:column; gap:16px; margin-top:22px;}
+  .proj-card{
+    background:var(--surface); border:1px solid var(--line); border-radius:6px;
+    overflow:hidden;
+  }
+  .proj-head{
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    padding:14px 18px; border-bottom:1px solid var(--line); flex-wrap:wrap;
+  }
+  .proj-card:nth-child(1){ --p-c: var(--teal); --p-soft: var(--teal-soft); }
+  .proj-card:nth-child(2){ --p-c: var(--violet); --p-soft: var(--violet-soft); }
+  .proj-card:nth-child(3){ --p-c: var(--amber); --p-soft: var(--amber-soft); }
+  .proj-card{border-top:3px solid var(--p-c, var(--teal));}
+  .proj-head h3{font-family:var(--display); font-weight:600; margin:0; font-size:18px;}
+  .proj-tag{
+    font-family:var(--mono); font-size:11px; font-weight:600; color:var(--p-c, var(--accent));
+    background:var(--p-soft, var(--accent-soft)); padding:3px 9px; border-radius:3px; white-space:nowrap;
+  }
+  .proj-body{padding:16px 18px 18px;}
+  .proj-body p{margin:0 0 12px; color:var(--ink-soft); font-size:14.5px;}
+  .proj-formulas{
+    display:flex; flex-wrap:wrap; gap:6px;
+  }
+  .proj-formulas span{
+    font-family:var(--mono); font-size:11.5px; font-weight:500; color:var(--p-c, var(--ink));
+    background:var(--bg); border:1px solid var(--line);
+    padding:3px 8px; border-radius:3px;
+  }
+  .mini-grid{
+    display:grid; grid-template-columns:repeat(5,1fr);
+    border:1px solid var(--line); border-radius:4px; overflow:hidden;
+    font-family:var(--mono); font-size:11px; margin-top:14px;
+  }
+  .mini-grid div{
+    padding:6px 4px; text-align:center; border-right:1px solid var(--line); border-bottom:1px solid var(--line);
+    color:var(--ink-soft);
+  }
+  .mini-grid div:nth-child(5n){border-right:none;}
+  .mini-grid .hd{background:var(--p-soft, var(--accent-soft)); color:var(--p-c, var(--accent)); font-weight:600;}
+
+  /* ---------- Contact ---------- */
+  .contact-card{
+    background:var(--surface); border:1px solid var(--line); border-top:3px solid var(--coral);
+    border-radius:6px;
+    padding:26px; margin-top:22px;
+  }
+  .contact-row{
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    padding:13px 0; border-bottom:1px solid var(--line); flex-wrap:wrap;
+  }
+  .contact-row:last-child{border-bottom:none;}
+  .contact-row .label{font-family:var(--mono); font-size:12px; color:var(--ink-soft);}
+  .contact-row .value{font-family:var(--display); font-weight:600; font-size:16px;}
+  .btn{
+    display:inline-block; font-family:var(--mono); font-weight:600; font-size:12.5px;
+    color:var(--surface); background:var(--ink);
+    padding:7px 14px; border-radius:4px; text-decoration:none;
+    transition:background .15s ease;
+  }
+  .btn:hover{background:linear-gradient(100deg, var(--teal), var(--violet)); text-decoration:none;}
+
+  footer{
+    padding:26px 0 40px; text-align:center;
+    font-family:var(--mono); font-size:11.5px; color:var(--ink-soft);
+  }
+
+  .reveal{opacity:0; transform:translateY(14px); transition:opacity .5s ease, transform .5s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<div class="col-ruler" aria-hidden="true">
+  <span>A</span><span>B</span><span>C</span><span>D</span><span>E</span><span>F</span><span>G</span><span>H</span>
+</div>
+
+<header>
+  <div class="topbar">
+    <div class="brand"><span class="dot" aria-hidden="true"></span>vansh_tyagi.xlsx</div>
+  </div>
+  <nav class="tabs" id="tabs">
+    <a href="#about" class="active">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <div class="fbar">
+      <span class="cellref">A1</span>
+      <span class="fx">fx</span>
+      <span class="formula">="Vansh Tyagi" &amp; " — Data Science Student"</span>
+    </div>
+    <h1 class="name">Vansh Tyagi</h1>
+    <p class="tagline">Third-year B.Tech Data Science student turning raw spreadsheets into clean, decision-ready data — one formula at a time.</p>
+    <div class="hero-meta">
+      <span>NIET, Greater Noida</span>
+      <span>Data Analysis</span>
+      <span>Excel</span>
+    </div>
+  </section>
+
+  <section id="about">
+    <p class="eyebrow">Sheet 1</p>
+    <h2>About</h2>
+    <div class="about-grid reveal">
+      <div class="about-text">
+        <p>I'm a third-year B.Tech Data Science student, currently preparing for campus placements. Alongside DSA and core data science fundamentals, I've been building hands-on fluency in Excel — from everyday formulas to full reporting dashboards — as a practical, in-demand skill for data-facing roles.</p>
+        <p>This site is a running log of that Excel work: the functions I've practiced, the mini-projects I've built with them, and the dashboards I've put together to turn raw tables into something a manager could actually read at a glance.</p>
+      </div>
+      <div class="facts">
+        <div class="row"><span class="k">DEGREE</span><span class="v">B.Tech, Data Science</span></div>
+        <div class="row"><span class="k">YEAR</span><span class="v">3rd Year</span></div>
+        <div class="row"><span class="k">COLLEGE</span><span class="v">NIET, Greater Noida</span></div>
+        <div class="row"><span class="k">FOCUS</span><span class="v">Placement Prep</span></div>
+        <div class="row"><span class="k">STATUS</span><span class="v">Open to opportunities</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <p class="eyebrow">Sheet 2</p>
+    <h2>Excel Skills</h2>
+    <p class="lede">Functions and tools I've practiced and applied across real datasets — organized the way I learned them.</p>
+    <div class="skill-grid reveal">
+
+      <div class="skill-card">
+        <div class="fx-label">fx CLEAN &amp; SHAPE</div>
+        <h3>Data Cleaning &amp; Text Functions</h3>
+        <p>TRIM, UPPER/LOWER/PROPER, Flash Fill, Text-to-Columns, Remove Duplicates</p>
+      </div>
+
+      <div class="skill-card">
+        <div class="fx-label">fx IF / AND / OR</div>
+        <h3>Logical Formulas</h3>
+        <p>IF, Nested IF, AND, OR — for eligibility checks, incentive rules, and status flags</p>
+      </div>
+
+      <div class="skill-card">
+        <div class="fx-label">fx VLOOKUP / XLOOKUP</div>
+        <h3>Lookup &amp; Reference</h3>
+        <p>VLOOKUP, HLOOKUP, XLOOKUP, INDEX-MATCH for pulling data across linked tables</p>
+      </div>
+
+      <div class="skill-card">
+        <div class="fx-label">fx SUMIFS / COUNTIFS</div>
+        <h3>Conditional Aggregation</h3>
+        <p>SUMIF/COUNTIF, SUMIFS/COUNTIFS, and core statistical functions (MAX, MIN, AVERAGE, COUNT)</p>
+      </div>
+
+      <div class="skill-card">
+        <div class="fx-label">fx SORT / FILTER</div>
+        <h3>Data Analysis Tools</h3>
+        <p>Sorting, Filtering, Advanced Filter, Data Validation, Conditional Formatting, Paste Special</p>
+      </div>
+
+      <div class="skill-card">
+        <div class="fx-label">fx PIVOT</div>
+        <h3>Reporting &amp; Visualization</h3>
+        <p>Pivot Tables, Pivot Charts, Slicers, Timelines, and dashboard layouts</p>
+      </div>
+
+      <div class="skill-card">
+        <div class="fx-label">fx MACRO</div>
+        <h3>Automation</h3>
+        <p>Recording and running Macros, working with Add-ins in .xlsm workbooks</p>
+      </div>
+
+      <div class="skill-card">
+        <div class="fx-label">fx NPV / RATE</div>
+        <h3>Financial Functions</h3>
+        <p>Core financial formulas for basic modeling and calculations</p>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="projects">
+    <p class="eyebrow">Sheet 3</p>
+    <h2>Projects</h2>
+    <p class="lede">Small, self-directed builds using practice datasets to apply these functions end to end.</p>
+
+    <div class="proj-list reveal">
+
+      <div class="proj-card">
+        <div class="proj-head">
+          <h3>Sales Performance Dashboard</h3>
+          <span class="proj-tag">Dashboard</span>
+        </div>
+        <div class="proj-body">
+          <p>Built a one-page dashboard tracking sales-executive performance against a fixed target, ranking top and bottom performers and surfacing "% of target hit" and "% away from target" for each rep — the kind of view a sales manager could scan in seconds.</p>
+          <div class="proj-formulas">
+            <span>SUMIFS</span><span>INDEX-MATCH</span><span>Conditional Formatting</span><span>Charts</span>
+          </div>
+          <div class="mini-grid" aria-hidden="true">
+            <div class="hd">Rep</div><div class="hd">Sales</div><div class="hd">Target</div><div class="hd">Hit %</div><div class="hd">Gap %</div>
+            <div>Jagdish C.</div><div>389</div><div>500</div><div>77.8%</div><div>22.2%</div>
+            <div>Rachita A.</div><div>385</div><div>500</div><div>77.0%</div><div>23.0%</div>
+            <div>Miny Mole</div><div>384</div><div>500</div><div>76.8%</div><div>23.2%</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-head">
+          <h3>Employee &amp; Leave Records System</h3>
+          <span class="proj-tag">HR Data</span>
+        </div>
+        <div class="proj-body">
+          <p>Structured employee, salary, and leave-record data across linked sheets — using lookups to pull department and contact details by employee ID, and logical formulas to flag promotion eligibility based on tenure and performance.</p>
+          <div class="proj-formulas">
+            <span>VLOOKUP</span><span>IF + AND/OR</span><span>Data Validation</span><span>SUMIF</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-head">
+          <h3>Excel Fundamentals-to-Advanced Practice Set</h3>
+          <span class="proj-tag">Learning Log</span>
+        </div>
+        <div class="proj-body">
+          <p>A structured, self-built workbook working through Excel chapter by chapter — from basic formulas, sorting, and filtering, up through pivot tables, pivot charts, slicers, timelines, XLOOKUP, and recorded macros. Used as a personal reference and proof of range.</p>
+          <div class="proj-formulas">
+            <span>Pivot Tables</span><span>Slicers</span><span>XLOOKUP</span><span>Macros</span><span>Timeline</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="contact">
+    <p class="eyebrow">Sheet 4</p>
+    <h2>Contact</h2>
+    <p class="lede">Reach out if you'd like to talk data, Excel, or opportunities.</p>
+    <div class="contact-card reveal">
+      <div class="contact-row">
+        <div>
+          <div class="label">=HYPERLINK("mailto:", "Email")</div>
+          <div class="value">tyagivansh175@gmail.com</div>
+        </div>
+        <a class="btn" href="mailto:tyagivansh175@gmail.com">Send email</a>
+      </div>
+      <div class="contact-row">
+        <div>
+          <div class="label">=HYPERLINK("linkedin", "Profile")</div>
+          <div class="value">LinkedIn</div>
+        </div>
+        <a class="btn" href="https://www.linkedin.com/in/" target="_blank" rel="noopener">View profile</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  Built with a spreadsheet mindset · vansh_tyagi.xlsx · updated 2026
+</footer>
+
+<script>
+  // Active tab highlighting on scroll
+  const sections = ['about','skills','projects','contact'].map(id => document.getElementById(id));
+  const tabs = Array.from(document.querySelectorAll('nav.tabs a'));
+  const setActive = (id) => {
+    tabs.forEach(t => t.classList.toggle('active', t.getAttribute('href') === '#' + id));
+  };
+  if ('IntersectionObserver' in window){
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) setActive(e.target.id); });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+    sections.forEach(s => s && obs.observe(s));
+
+    const revealObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting){ e.target.classList.add('in'); revealObs.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+  } else {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+  }
+</script>
+
+</body>
+</html>
